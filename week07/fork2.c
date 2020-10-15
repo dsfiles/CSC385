@@ -14,7 +14,7 @@ int main()
 	} else if (pid == 0) { /* child process */
 		execlp("/bin/ls","ls",NULL);
 	} else { /* parent process */	
-		* parent will wait for the child to complete */
+		/* parent will wait for the child to complete */
 		wait(NULL);
 		printf("Child Complete");
 	}
