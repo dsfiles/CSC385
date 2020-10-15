@@ -3,7 +3,7 @@
 #include <unistd.h>
 
 int main() {
-  pid t pid, pid1;
+  pid_t pid;
   /* fork a child process */
   pid = fork(); // clone a process
   if (pid < 0) { /* error occurred (very unlikely in your VM) */
