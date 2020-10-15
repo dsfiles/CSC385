@@ -4,7 +4,7 @@
 
 int main()
 {
-	pid t pid;
+	pid_t pid;
 	
 	/* fork a child process */
 	pid = fork();
