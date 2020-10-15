@@ -10,11 +10,11 @@ int main() {
     fprintf(stderr, "Fork Failed"); //send error message to stderr (screen or a file)
     return 1;
   } else if (pid == 0) { /* child process */
-    printf("child process successfully created!\n");
+    printf("\nchild process successfully created!\n");
     printf ("Child process: PID = %d, parent PID = %d\n", getpid(), getppid());
   }
   else { /* parent process */
-    printf ("Parent process: PID = %d, parent_PID = %d\n", getpid(), getppid());
+    printf ("Parent process: PID = %d, parent PID = %d\n", getpid(), getppid());
     wait(NULL);
   }
   return 0;
