@@ -11,11 +11,10 @@ int main() {
   return 1;
   } else if (pid == 0) { /* child process */
     printf("child process successfully created!\n");
-    printf ("child_PID = %d,parent_PID = %d\n", getpid(), getppid( ) );
+    printf ("Child process: PID = %d, parent PID = %d\n", getpid(), getppid( ) );
   }
   else { /* parent process */
-    printf("Parent process:\n");
-    printf ("child_PID = %d,parent_PID = %d\n", getpid(), getppid( ) );
+    printf ("Parent: PID = %d, parent_PID = %d\n", getpid(), getppid( ) );
     wait(NULL);
   }
   return 0;
