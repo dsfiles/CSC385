@@ -3,32 +3,32 @@
 #include <semaphore.h> 
 #include <unistd.h> 
   
-sem_t mutex; 
+sem_t sem; //define a semaphore
   
 void* thread(void* arg) 
 { 
     //wait 
-    sem_wait(&mutex); 
-    printf("\nEntered..\n"); 
+    sem_wait(&sem); 
+    printf("\nEnter critical section..\n"); 
   
     //critical section 
-    sleep(4); 
+    sleep(2); 
       
     //signal 
-    printf("\nJust Exiting...\n"); 
-    sem_post(&mutex); 
+    printf("\nExiting...\n"); 
+    sem_post(&sem); 
 } 
   
   
 int main() 
 { 
-    sem_init(&mutex, 0, 1); 
-    pthread_t t1,t2; 
-    pthread_create(&t1,NULL,thread,NULL); 
-    sleep(2); 
+    sem_init(&sem, 0, 1); // initiazlize sem with a value 1
+    pthread_t thread1,thread2; 
+    pthread_create(&thread1,NULL,thread,NULL); 
+    sleep(1); 
     pthread_create(&t2,NULL,thread,NULL); 
-    pthread_join(t1,NULL); 
-    pthread_join(t2,NULL); 
-    sem_destroy(&mutex); 
+    pthread_join(thread1,NULL); 
+    pthread_join(thread2,NULL); 
+    sem_destroy(&sem); 
     return 0; 
 } 
