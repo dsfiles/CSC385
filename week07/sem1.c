@@ -17,7 +17,7 @@ void* thread_function(void* arg)
 
 int main() 
 { 
-    sem_init(&s, 0, 1); // initiazlize sem with a value 1
+    sem_init(&s, 0, 1); // initiazlize s with a value 1
     pthread_t thread1,thread2; 
     pthread_create(&thread1,NULL,thread_function,NULL); 
     pthread_create(&thread2,NULL,thread_function,NULL); 
