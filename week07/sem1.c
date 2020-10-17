@@ -2,24 +2,19 @@
 #include <pthread.h> 
 #include <semaphore.h> 
 #include <unistd.h> 
-  
+
 sem_t s; //define a semaphore used as a mutex
   
 void* thread_function(void* arg) 
 { 
-    //wait 
     sem_wait(&s); 
     printf("\nEntering...\n"); 
-  
-    //critical section 
+    //simulate a critical section 
     printf("Now inside critical section!\n"); 
-      
-    //signal 
     printf("Exiting...\n"); 
     sem_post(&s); 
-} 
-  
-  
+}
+
 int main() 
 { 
     sem_init(&s, 0, 1); // initiazlize sem with a value 1
