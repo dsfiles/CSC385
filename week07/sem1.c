@@ -1,3 +1,4 @@
+/* sem1.c */
 #include <stdio.h> 
 #include <pthread.h> 
 #include <semaphore.h> 
