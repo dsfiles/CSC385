@@ -9,10 +9,10 @@ void* thread_function(void* arg)
 { 
     //wait 
     sem_wait(&s); 
-    printf("\nEntering critical section..\n"); 
+    printf("\nEntering...\n"); 
   
     //critical section 
-    printf("Now inside critical section..\n"); 
+    printf("Now inside critical section!\n"); 
   //sleep(1); 
       
     //signal 
