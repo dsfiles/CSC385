@@ -12,7 +12,8 @@ void* thread_function(void* arg)
     printf("\nEnter critical section..\n"); 
   
     //critical section 
-    sleep(2); 
+    printf("\Now inside critical section..\n"); 
+  //sleep(1); 
       
     //signal 
     printf("\nExiting...\n"); 
