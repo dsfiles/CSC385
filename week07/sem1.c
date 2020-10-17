@@ -16,7 +16,7 @@ void* thread_function(void* arg)
   //sleep(1); 
       
     //signal 
-    printf("\nExiting...\n"); 
+    printf("Exiting...\n"); 
     sem_post(&s); 
 } 
   
@@ -30,6 +30,6 @@ int main()
     pthread_create(&thread2,NULL,thread_function,NULL); 
     pthread_join(thread1,NULL); 
     pthread_join(thread2,NULL); 
-    sem_destroy(&); 
+    sem_destroy(&s); 
     return 0; 
 } 
