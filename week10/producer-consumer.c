@@ -1,72 +1,77 @@
-//https://raw.githubusercontent.com/codophobia/producer-consumer-problem-solution-in-c/master/producer-consumer.c
 #include <pthread.h>
 #include <semaphore.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 /*
-This program provides a possible solution for first readers writers problem using mutex and semaphore.
-I have used 10 readers and 5 producers to demonstrate the solution. You can always play with these values.
+This program provides a possible solution for producer-consumer problem using mutex and semaphore.
+I have used 5 producers and 5 consumers to demonstrate the solution. You can always play with these values.
 */
 
-sem_t wrt;
+#define MaxItems 5 // Maximum items a producer can produce or a consumer can consume
+#define BufferSize 5 // Size of the buffer
+
+sem_t empty;
+sem_t full;
+int in = 0;
+int out = 0;
+int buffer[BufferSize];
 pthread_mutex_t mutex;
-int cnt = 1;
-int numreader = 0;
 
-void *writer(void *wno)
+void *producer(void *pno)
 {   
-    sem_wait(&wrt);
-    cnt = cnt*2;
-    printf("Writer %d modified cnt to %d\n",(*((int *)wno)),cnt);
-    sem_post(&wrt);
-
+    int item;
+    for(int i = 0; i < MaxItems; i++) {
+        item = rand(); // Produce an random item
+        sem_wait(&empty);
+        pthread_mutex_lock(&mutex);
+        buffer[in] = item;
+        printf("Producer %d: Insert Item %d at %d\n", *((int *)pno),buffer[in],in);
+        in = (in+1)%BufferSize;
+        pthread_mutex_unlock(&mutex);
+        sem_post(&full);
+    }
 }
-void *reader(void *rno)
+void *consumer(void *cno)
 {   
-    // Reader acquire the lock before modifying numreader
-    pthread_mutex_lock(&mutex);
-    numreader++;
-    if(numreader == 1) {
-        sem_wait(&wrt); // If this id the first reader, then it will block the writer
+    for(int i = 0; i < MaxItems; i++) {
+        sem_wait(&full);
+        pthread_mutex_lock(&mutex);
+        int item = buffer[out];
+        printf("Consumer %d: Remove Item %d from %d\n",*((int *)cno),item, out);
+        out = (out+1)%BufferSize;
+        pthread_mutex_unlock(&mutex);
+        sem_post(&empty);
     }
-    pthread_mutex_unlock(&mutex);
-    // Reading Section
-    printf("Reader %d: read cnt as %d\n",*((int *)rno),cnt);
-
-    // Reader acquire the lock before modifying numreader
-    pthread_mutex_lock(&mutex);
-    numreader--;
-    if(numreader == 0) {
-        sem_post(&wrt); // If this is the last reader, it will wake up the writer.
-    }
-    pthread_mutex_unlock(&mutex);
 }
 
 int main()
 {   
 
-    pthread_t read[10],write[5];
+    pthread_t pro[5],con[5];
     pthread_mutex_init(&mutex, NULL);
-    sem_init(&wrt,0,1);
+    sem_init(&empty,0,BufferSize);
+    sem_init(&full,0,0);
 
-    int a[10] = {1,2,3,4,5,6,7,8,9,10}; //Just used for numbering the producer and consumer
+    int a[5] = {1,2,3,4,5}; //Just used for numbering the producer and consumer
 
-    for(int i = 0; i < 10; i++) {
-        pthread_create(&read[i], NULL, (void *)reader, (void *)&a[i]);
+    for(int i = 0; i < 5; i++) {
+        pthread_create(&pro[i], NULL, (void *)producer, (void *)&a[i]);
     }
     for(int i = 0; i < 5; i++) {
-        pthread_create(&write[i], NULL, (void *)writer, (void *)&a[i]);
+        pthread_create(&con[i], NULL, (void *)consumer, (void *)&a[i]);
     }
 
-    for(int i = 0; i < 10; i++) {
-        pthread_join(read[i], NULL);
+    for(int i = 0; i < 5; i++) {
+        pthread_join(pro[i], NULL);
     }
     for(int i = 0; i < 5; i++) {
-        pthread_join(write[i], NULL);
+        pthread_join(con[i], NULL);
     }
 
     pthread_mutex_destroy(&mutex);
-    sem_destroy(&wrt);
+    sem_destroy(&empty);
+    sem_destroy(&full);
 
     return 0;
     
