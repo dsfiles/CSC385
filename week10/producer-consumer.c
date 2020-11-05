@@ -23,12 +23,12 @@ pthread_mutex_t mutex;
 void *producer(void *p)
 {   
     int item;
-    for(int i = 0; i < max_items; i++) {
-        item = rand(); // Produce an random item
+    for(int i = 0; i < max; i++) {
+        //item = rand(); // Produce an random item
         sem_wait(&empty);
         pthread_mutex_lock(&mutex);
-        buffer[in] = item;
-        printf("Producer %d: Insert Item %d at %d\n", *((int *)p),buffer[in],in);
+        buffer[in] = i;
+        printf("producer %d: insert item %d at buffer[%d]\n", *((int *)p),buffer[in],in);
         in = (in+1)%buffer_size;
         pthread_mutex_unlock(&mutex);
         sem_post(&full);
@@ -40,8 +40,8 @@ void *consumer(void *c)
         sem_wait(&full);
         pthread_mutex_lock(&mutex);
         int item = buffer[out];
-        printf("Consumer %d: Remove Item %d from %d\n",*((int *)cno),item, out);
-        out = (out+1)%BufferSize;
+        printf("consumer %d: remove item %d from buffer[%d]\n",*((int *)c),item, out);
+        out = (out+1)%buffer_size;
         pthread_mutex_unlock(&mutex);
         sem_post(&empty);
     }
