@@ -7,33 +7,29 @@
 This is a skeleton for the producer-consumer problem using mutex and semaphore.
 */
 
-//#define MaxItems 5 // Maximum items a producer can produce or a consumer can consume
-//#define BufferSize 5 // Size of the buffer
-
-const int max = 5; 
+const int max = 5; //maximum items
 const int buffer_size = 5;
 
 sem_t empty;
 sem_t full;
-int in = 0;
-int out = 0;
 int buffer[buffer_size];
 pthread_mutex_t mutex;
+int in = 0;
+int out = 0;
 
 void *producer(void *p)
 {   
-    int item;
     for(int i = 0; i < max; i++) {
-        //item = rand(); // Produce an random item
         sem_wait(&empty);
         pthread_mutex_lock(&mutex);
         buffer[in] = i;
-        printf("producer %d: insert item %d at buffer[%d]\n", *((int *)p),buffer[in],in);
+        printf("producer %d: insert item %d at\tbuffer[%d]\n", *((int *)p),buffer[in],in);
         in = (in+1)%buffer_size;
         pthread_mutex_unlock(&mutex);
         sem_post(&full);
     }
 }
+
 void *consumer(void *c)
 {   
     for(int i = 0; i < max; i++) {
