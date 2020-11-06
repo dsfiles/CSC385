@@ -1,11 +1,11 @@
+/*
+This is a skeleton for the producer-consumer problem using mutex and semaphore.
+*/
+
 #include <pthread.h>
 #include <semaphore.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-/*
-This is a skeleton for the producer-consumer problem using mutex and semaphore.
-*/
 
 const int max = 5; //maximum items
 const int buffer_size = 5;
