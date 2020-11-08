@@ -7,8 +7,8 @@ This is a skeleton for the producer-consumer problem using mutex and semaphore.
 #include <stdlib.h>
 #include <stdio.h>
 
-#define MAX 5; //maximum items
-#define BUFFSIZE 5;
+#define MAX 5;//maximum items
+#define BUFFSIZ 5;
 
 sem_t empty;
 sem_t full;
