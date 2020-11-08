@@ -23,6 +23,7 @@ void *producer(void *p)
         sem_wait(&empty);
         pthread_mutex_lock(&mutex);
         buffer[in] = i;
+        sleep(1);
         printf("producer %d: insert item %d at\tbuffer[%d]\n", *((int *)p),buffer[in],in);
         in = (in+1)%BUFFSIZE;
         pthread_mutex_unlock(&mutex);
@@ -36,6 +37,7 @@ void *consumer(void *c)
         sem_wait(&full);
         pthread_mutex_lock(&mutex);
         int item = buffer[out];
+        sleep(1);
         printf("consumer %d: remove item %d from buffer[%d]\n",*((int *)c),item, out);
         out = (out+1)%BUFFSIZE;
         pthread_mutex_unlock(&mutex);
