@@ -1,6 +1,6 @@
 /*
-This is a skeleton for the producer-consumer problem using mutex and semaphore.
-*/
+ * This program simulates the producer-consumer problem using POSIX mutex and semaphore.
+ */
 
 #include <pthread.h>
 #include <semaphore.h>
@@ -38,8 +38,8 @@ void *consumer(void *c)
         sem_wait(&full);
         pthread_mutex_lock(&mutex);
         int item_removed = buffer[out];
-        printf("consumer %d: remove item %d from buffer[%d]\n",*((int *)c),item_removed, out);
-        out = (out+1)%BUFFSIZE;
+        printf("consumer %d: remove item %d from buffer[%d]\n",*((int *)c), item_removed, out);
+        out = (out+1) % BUFFSIZE;
         pthread_mutex_unlock(&mutex);
         sem_post(&empty);
     }
