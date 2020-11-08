@@ -1,14 +1,12 @@
 /*
  * This program simulates the producer-consumer problem using POSIX mutex and semaphore.
  */
-
 #include <pthread.h>
 #include <semaphore.h>
 #include <stdlib.h>
 #include <stdio.h>
 #define MAX 5
 #define BUFFSIZE 5
-
 sem_t empty;
 sem_t full;
 int buffer[BUFFSIZE];
