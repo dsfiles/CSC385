@@ -41,6 +41,7 @@ void *consumer(void *c)
         int item = buffer[out];
         sleep(1);
         printf("consumer %d: remove item %d from buffer[%d]\n",*((int *)c),item, out);
+        printf("\t buffer is: %d %d %d %d %d", buffer[0], buffer[1],buffer[2],buffer[3],buffer[4]);
         out = (out+1)%BUFFSIZE;
         pthread_mutex_unlock(&mutex);
         sem_post(&empty);
