@@ -7,7 +7,7 @@ This is a skeleton for the producer-consumer problem using mutex and semaphore.
 #include <stdlib.h>
 #include <stdio.h>
 
-#define MAX 5 //maximum items
+#define MAX 5
 #define BUFFSIZ 5
 
 sem_t empty;
@@ -46,7 +46,7 @@ void *consumer(void *c)
 int main()
 {   
 
-    pthread_t producer[5],consumer[5];
+    pthread_t p[5],c[5];
     pthread_mutex_init(&mutex, NULL);
     sem_init(&empty, 0, BUFFSIZE);
     sem_init(&full,0,0);
@@ -54,17 +54,17 @@ int main()
     int a[5] = {1,2,3,4,5}; //Just used for numbering the producer and consumer
 
     for(int i = 0; i < 5; i++) {
-        pthread_create(&producer[i], NULL, (void *)producer, (void *)&a[i]);
+        pthread_create(&p[i], NULL, (void *)producer, (void *)&a[i]);
     }
     for(int i = 0; i < 5; i++) {
-        pthread_create(&consumer[i], NULL, (void *)consumer, (void *)&a[i]);
+        pthread_create(&c[i], NULL, (void *)consumer, (void *)&a[i]);
     }
 
     for(int i = 0; i < 5; i++) {
-        pthread_join(producer[i], NULL);
+        pthread_join(p[i], NULL);
     }
     for(int i = 0; i < 5; i++) {
-        pthread_join(consumer[i], NULL);
+        pthread_join(c[i], NULL);
     }
 
     pthread_mutex_destroy(&mutex);
