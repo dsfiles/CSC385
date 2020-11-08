@@ -21,7 +21,7 @@ void *producer(void *p)
         sem_wait(&empty);
         pthread_mutex_lock(&mutex);
         buffer[in] = item;
-        item = item +1;
+        item = item + 1;
         printf("producer %d: insert item %d at\tbuffer[%d]\n", *((int *)p), buffer[in], in);
         in = (in+1) % BUFFSIZE;
         pthread_mutex_unlock(&mutex);
@@ -50,10 +50,10 @@ int main()
     sem_init(&full,0,0);
     int a[5] = {1,2,3,4,5}; //Just used for numbering the producer and consumer
     for(int i = 0; i < 5; i++) {
-        pthread_create(&p[i], NULL, (void *)producer, (void *)&a[i]);
-    }
+        pthread_create(&p[i], NULL, (void *)producer, NULL);
+    } //(void *)&a[i]
     for(int i = 0; i < 5; i++) {
-        pthread_create(&c[i], NULL, (void *)consumer, (void *)&a[i]);
+        pthread_create(&c[i], NULL, (void *)consumer, NULL);
     }
     for(int i = 0; i < 5; i++) {
         pthread_join(p[i], NULL);
