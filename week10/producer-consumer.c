@@ -16,13 +16,15 @@ int buffer[BUFFSIZE];
 pthread_mutex_t mutex;
 int in = 0;
 int out = 0;
+int item = 0;
 
 void *producer(void *p)
 {   
     for(int i = 0; i < MAX; i++) {
         sem_wait(&empty);
         pthread_mutex_lock(&mutex);
-        buffer[in] = i;
+        buffer[in] = item;
+        item = item +1;
         sleep(1);
         printf("producer %d: insert item %d at\tbuffer[%d]\n", *((int *)p),buffer[in],in);
         in = (in+1)%BUFFSIZE;
