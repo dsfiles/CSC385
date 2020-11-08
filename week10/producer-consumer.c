@@ -38,9 +38,7 @@ void *consumer(void *c)
         sem_wait(&full);
         pthread_mutex_lock(&mutex);
         int item_removed = buffer[out];
-        sleep(1);
         printf("consumer %d: remove item %d from buffer[%d]\n",*((int *)c),item_removed, out);
-        //printf("\t buffer is: %d %d %d %d %d", buffer[0], buffer[1],buffer[2],buffer[3],buffer[4]);
         out = (out+1)%BUFFSIZE;
         pthread_mutex_unlock(&mutex);
         sem_post(&empty);
@@ -49,7 +47,6 @@ void *consumer(void *c)
 
 int main()
 {   
-
     pthread_t p[5],c[5];
     pthread_mutex_init(&mutex, NULL);
     sem_init(&empty, 0, BUFFSIZE);
@@ -67,6 +64,7 @@ int main()
     for(int i = 0; i < 5; i++) {
         pthread_join(p[i], NULL);
     }
+    
     for(int i = 0; i < 5; i++) {
         pthread_join(c[i], NULL);
     }
