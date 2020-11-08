@@ -51,10 +51,10 @@ int main()
     int id;
     int a[5] = {1,2,3,4,5}; //Just used for numbering the producer and consumer
     for(int i = 0; i < 5; i++) {
-        pthread_create(&p[i], NULL, (void *)producer, (void *)id);
+        pthread_create(&p[i], NULL, (void *)producer, (void *)&id);
     } //(void *)&a[i]
     for(int i = 0; i < 5; i++) {
-        pthread_create(&c[i], NULL, (void *)consumer, (void *)id);
+        pthread_create(&c[i], NULL, (void *)consumer, (void *)&id);
     }
     for(int i = 0; i < 5; i++) {
         pthread_join(p[i], NULL);
