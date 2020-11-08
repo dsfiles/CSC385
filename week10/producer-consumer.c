@@ -49,12 +49,12 @@ int main()
     sem_init(&empty, 0, BUFFSIZE);
     sem_init(&full,0,0);
     int id;
-    int a[5] = {1,2,3,4,5}; //Just used for numbering the producer and consumer
+    int a[5] = {1,2,3,4,5}; //Keep track of the producer and consumer
     for(int i = 0; i < 5; i++) {
-        pthread_create(&p[i], NULL, (void *)producer, (void *)&id);
-    } //(void *)&a[i]
+        pthread_create(&p[i], NULL, (void *)producer, (void *)&a[i]);
+    }
     for(int i = 0; i < 5; i++) {
-        pthread_create(&c[i], NULL, (void *)consumer, (void *)&id);
+        pthread_create(&c[i], NULL, (void *)consumer, (void *)&a[i]);
     }
     for(int i = 0; i < 5; i++) {
         pthread_join(p[i], NULL);
