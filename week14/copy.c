@@ -1,3 +1,10 @@
+/*
+C program to copy a file: This program copies a file, firstly you will specify a file to copy, 
+and then you will enter name and extension of target file . We will open the file that we wish to copy 
+in "read" mode and target file in "write" mode. The code is from the following site:
+https://www.programmingsimplified.com/c-program-copy-file
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 int main()
