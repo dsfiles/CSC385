@@ -1,3 +1,6 @@
+Week10 folder：
+https://github.com/dsfiles/CSC385/tree/main/week10
+
 Answers:
 a)What do Lines 26 and 39 try to accomplish?
 	move the buffer index to the beginning when it reaches the end.
