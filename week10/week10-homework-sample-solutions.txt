@@ -1,0 +1,29 @@
+Answers:
+a)What do Lines 26 and 39 try to accomplish?
+	move the buffer index to the beginning when it reaches the end.
+
+b)Why variables in, out and item are defined as global variables (outside any function)?
+	the buffer and items are accessed by all the threads. 
+
+c)The size of buffer is 5. How does the program guaranteed that buffer overflow will never occur? Please explain.
+	before a producer inserts an item to the buffer, it issues a wait operation on the empty semaphore - wait(empty) 
+	to make sure there is any empty spaces in the buffer.
+
+d)Describe the program.
+	see the program with lots of comments
+https://github.com/dsfiles/CSC385/blob/main/week10/producer-consumer-with-comments.c
+https://raw.githubusercontent.com/dsfiles/CSC385/main/week10/producer-consumer-with-comments.c
+https://git.io/JIwY5
+
+e) the following is slightly revised version: instead of 5 producers/consumers, each producer/consumer produces/consumes 5 items,
+a slightly revised version is as follows:
+	There are 4 producers, each produces 6 items; 6 consumers, and each consumes 4 items.
+	buffer size remains the same
+	https://raw.githubusercontent.com/dsfiles/CSC385/main/week10/pc3.c
+	https://git.io/JIw39
+
+To run this program in the VM:
+	wget git.io/JIw39
+	mv JIw39 pc3.c
+	gcc -pthread pc3.c
+	./a.out
