@@ -3,7 +3,7 @@ https://github.com/dsfiles/CSC385/tree/main/week10
 
 Answers:
 a)What do Lines 26 and 39 try to accomplish?
-	move the buffer index to the beginning when it reaches the end.
+	move the buffer index to the beginning when it reaches the end. thus, the buffer is used in a circular fashion.
 
 b)Why variables in, out and item are defined as global variables (outside any function)?
 	the buffer and items are accessed by all the threads. 
