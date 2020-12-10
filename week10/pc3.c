@@ -55,7 +55,7 @@ int main()
     for(int i = 0; i < 4; i++) { //create 4 producers
         pthread_create(&p[i], NULL, (void *)producer, (void *)&a[i]);
     }
-    for(int i = 0; i < 5; i++) { //create 6 consumers
+    for(int i = 0; i < 6; i++) { //create 6 consumers
         pthread_create(&c[i], NULL, (void *)consumer, (void *)&a[i]);
     }
     for(int i = 0; i < 4; i++) {
